@@ -7,8 +7,10 @@ Only works on Firefox + Greasemonkey
 
 ### Installation instructions
 - Install Firefox and [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)
-- Install [hack_aimbot.user.js](https://raw.githubusercontent.com/rpasta42/surviv.io-aimbot/master/hack_aimbot.user.js) and [hack_injector.user.js](https://github.com/rpasta42/surviv.io-aimbot/blob/master/hack_injector.user.js)
-- Run the game and open console with Ctrl+Shift+I. If it says "Hack injected", then it's working
+- Install
+  [hack_aimbot.user.js](https://raw.githubusercontent.com/rpasta42/surviv.io-aimbot/master/hack_aimbot.user.js) and [hack_injector.user.js](https://github.com/rpasta42/surviv.io-aimbot/blob/master/hack_injector.user.js).
+   - You can install by Clicking Greasemonkey extension icon, selecting "New User Script", and pasting content of a script.
+- Run the game and open console with Ctrl+Shift+I. If it says "Hack injected", then hack should activate in next game
 
 
 
