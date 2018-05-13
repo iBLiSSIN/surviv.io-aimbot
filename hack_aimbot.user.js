@@ -5,10 +5,10 @@
 // @grant    unsafeWindow
 // @author       You
 // @match        http://surviv.io/*
-// @require      http://code.jquery.com/jquery-1.12.4.min.js
+// @require      http://code.jquery.com/jquery-3.3.1.js
 // ==/UserScript==
 
-
+//http://code.jquery.com/jquery-1.12.4.min.js
 
 (function() {
 	$(function() { main(); });
@@ -17,6 +17,12 @@
 
 function main() {
 	var game;
+  var botConfig = {};
+
+  initConfig();
+  initUi();
+
+
 
 	botLoop();
 
@@ -173,11 +179,18 @@ function findClosestEnemy() {
 
 
 
+
 var botLoopC = 0;
 
 var isInjected = false;
 
 function botLoop() {
+
+  if (!botConfig.enabled) {
+    setTimeout(botLoop, 300);
+    return;
+  }
+
 	try {
     if (unsafeWindow.game == null) {
       console.log('waiting for game to start', window.game);
@@ -213,6 +226,83 @@ function botLoop() {
 
 ////////////////////
 
+
+
+
+function initConfig() {
+  botConfig = {
+		enabled : true
+  }
+  unsafeWindow.botConfig = botConfig;
+
+
+
+
+  function toggleBot() {
+		unsafeWindow.botConfig.enabled = !unsafeWindow.botConfig.enabled;
+	}
+
+  $(window).on('keypress', function(e) {
+
+    var code = (e.keyCode ? e.keyCode : e.which);
+    if(code == 'z'.charCodeAt(0)) {
+    	toggleBot();
+    }
+
+	});
+
+}
+
+
+function initUi() {
+
+
+
+	var uiHtml = `
+<div id='botInfo'>
+
+	<div>Bot enabled:<span id='botEnabled'>?</span></div>
+
+
+<div>
+
+<style>
+#botInfo {
+	z-index:  50000000;
+	position: fixed;
+	top: 50%;
+	margin: 10px;
+	padding: 15px;
+	background-color: #333388;
+	left: 0;
+	border-style: solid;
+	border-width: 5px;
+	border-color:	red;
+}
+</style>
+	`;
+
+
+  function updateUi() {
+  	console.log('update ui called');
+
+
+    $('#botEnabled').text(botConfig.enabled ? "true" : "false");
+  }
+
+	var interval = setInterval(updateUi, 500);
+
+	$("body").append(uiHtml);
+
+
+}
+
+
+
+
+
+
+////////////////////
 
 
 var _angle = 0;

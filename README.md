@@ -15,12 +15,15 @@ Only works on Firefox + Greasemonkey
 - Run the game and open console with Ctrl+Shift+I. If it says "Hack injected", then hack should activate in next game
 
 
+### Instructions
+- Use z key to toggle on/off
 
 ### TODO
 - [x] automatically restart on new games
+- [x] keybinding to toggle off/on
+- [x] simple UI
 - [ ] avoid aiming at dead enemies
 - [ ] avoid aiming at team-mates
 - [ ] bullet path prediction
-- [ ] keybinding to toggle off/on
 
 
