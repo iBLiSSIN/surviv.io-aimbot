@@ -1,3 +1,25 @@
+// ==UserScript==
+// @name     Surviv.io_aimbot
+// @namespace    http://tampermonkey.net/
+// @version  1
+// @grant    unsafeWindow
+// @author       You
+// @match        http://surviv.io/*
+// @require      http://code.jquery.com/jquery-1.12.4.min.js
+// ==/UserScript==
+
+
+
+(function() {
+	$(function() { main(); });
+})();
+
+
+function main() {
+	var game;
+
+	botLoop();
+
 
 function toDegrees (angle) {
   return angle * (180 / Math.PI);
@@ -106,7 +128,6 @@ function findDistance(pos1, pos2) {
 
 
 
-
 var newPlayerCounter = 0;
 var closestPlayerIndex = -1;
 
@@ -125,6 +146,7 @@ function findClosestEnemy() {
 	}
 	else
 		return players[closestPlayerIndex].pos;
+
 
 	for (var i in players) {
 		var player = players[i];
@@ -153,25 +175,38 @@ function findClosestEnemy() {
 
 var botLoopC = 0;
 
-
+var isInjected = false;
 
 function botLoop() {
+	try {
+    if (unsafeWindow.game == null) {
+      console.log('waiting for game to start', window.game);
+      setTimeout(botLoop, 300);
+      return;
+    }
+    if (!isInjected) {
+      console.log('bot injected');
+      isInjected = true;
+    }
+    game = unsafeWindow.game;
+
+    var closestPlayer = findClosestEnemy();
 
 
-
-	var closestPlayer = findClosestEnemy();
-
-	//console.log('loop', closestPlayer, game.camera.pos);
-	if (closestPlayer != -1) {
-		//slowlyMoveTo(closestPlayer.x, y);
-		turnTo(closestPlayer.x, closestPlayer.y);
-		//game.input.mousePos.x = closestPlayer.x;
-		//game.input.mousePos.y = closestPlayer.y;
-	}
-	botLoopC++;
-
-	//if (botLoopC < 200)
-		setTimeout(botLoop, 30);
+    //console.log('loop', closestPlayer, game.camera.pos);
+    if (closestPlayer != -1) {
+      //slowlyMoveTo(closestPlayer.x, y);
+      turnTo(closestPlayer.x, closestPlayer.y);
+      //game.input.mousePos.x = closestPlayer.x;
+      //game.input.mousePos.y = closestPlayer.y;
+    }
+    botLoopC++;
+  }
+  catch (error) {
+    console.log('surviv err: ', error);
+  }
+  //if (botLoopC < 200)
+  window.setTimeout(botLoop, 30);
 }
 //botLoop();
 
@@ -196,3 +231,4 @@ function testLocation() {
 }//testLocation();
 
 
+}
