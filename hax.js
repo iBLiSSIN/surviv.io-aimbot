@@ -107,7 +107,7 @@ function findDistance(pos1, pos2) {
 
 
 
-var newPlayerCounter = 0; 
+var newPlayerCounter = 0;
 var closestPlayerIndex = -1;
 
 function findClosestEnemy() {
@@ -119,7 +119,7 @@ function findClosestEnemy() {
 	var minPlayerDistance = 1000000;
 	var minPlayerIndex = -1;
 
-		
+
 	if (newPlayerCounter++ == 10 ||  closestPlayerIndex == -1) {
 		newPlayerCounter = 0;
 	}
@@ -173,7 +173,7 @@ function botLoop() {
 	//if (botLoopC < 200)
 		setTimeout(botLoop, 30);
 }
-botLoop();
+//botLoop();
 
 
 ////////////////////
