@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name     Surviv.io_aimbot
+// @name     	Surviv.io_aimbot
 // @namespace    http://tampermonkey.net/
-// @version  1
-// @grant    unsafeWindow
-// @author       You
+// @version  	1
+// @grant    	unsafeWindow
+// @author       https://github.com/rpasta42
 // @match        http://surviv.io/*
-// @require      http://code.jquery.com/jquery-3.3.1.js
+// @require      http://code.jquery.com/jquery-3.3.1.js 
 // ==/UserScript==
 
 //http://code.jquery.com/jquery-1.12.4.min.js
@@ -17,14 +17,13 @@
 
 function main() {
 	var game;
-  var botConfig = {};
-
+  var botConfig = {}; 
+  
   initConfig();
   initUi();
+  
 
-
-
-	botLoop();
+	botLoop(); 
 
 
 function toDegrees (angle) {
@@ -133,10 +132,33 @@ function findDistance(pos1, pos2) {
 }
 
 
-
+  
 var newPlayerCounter = 0;
 var closestPlayerIndex = -1;
 
+  
+var dead_ids = [];
+var deadCounter = 0;
+  
+function getDeadIds() {
+	//console.log(game.deadBodyBarn.deadBodyPool.pool);
+  
+  if (!deadCounter++ < 20)
+    return dead_ids;
+  deadCounter = 0;
+  
+ 
+  var deadPool = game.deadBodyBarn.deadBodyPool.pool;
+  dead_ids = [];
+  for (var i in deadPool) {
+    var deadItem = deadPool[i];
+    
+  	 dead_ids.push(deadItem.__id);
+  }
+  //console.log(dead_ids);
+  return dead_ids;
+}
+  
 function findClosestEnemy() {
 
 	var currPlayerPos = game.camera.pos;
@@ -146,18 +168,29 @@ function findClosestEnemy() {
 	var minPlayerDistance = 1000000;
 	var minPlayerIndex = -1;
 
-
+  
+  
+  var deadPlayers = getDeadIds();
+  //console.log(deadPlayers);
+  
 	if (newPlayerCounter++ == 10 ||  closestPlayerIndex == -1) {
 		newPlayerCounter = 0;
 	}
-	else
+	else {
+		if (deadPlayers.includes(players[closestPlayerIndex].__id)) {
+			closestPlayerIndex = -1;
+      return -1;
+		}
 		return players[closestPlayerIndex].pos;
-
-
+  }
+  
 	for (var i in players) {
 		var player = players[i];
-		if (player.downed || !player.active)
-			continue;
+    //console.log(player.bleedTicker);
+    if (deadPlayers.includes(player.__idaa))
+        continue;
+		//if (player.downed || !player.active) continue;
+ 
 
 		var playerPos = player.pos;
 		var distance = findDistance(currPlayerPos, playerPos);
@@ -170,7 +203,7 @@ function findClosestEnemy() {
 	}
 
 	closestPlayerIndex = minPlayerIndex;
-
+  
 	if (minPlayerIndex == -1)
 		return -1;
 
@@ -190,11 +223,11 @@ function botLoop() {
     setTimeout(botLoop, 300);
     return;
   }
-
+  
 	try {
     if (unsafeWindow.game == null) {
       console.log('waiting for game to start', window.game);
-      setTimeout(botLoop, 300);
+      setTimeout(botLoop, 300); 
       return;
     }
     if (!isInjected) {
@@ -226,43 +259,43 @@ function botLoop() {
 
 ////////////////////
 
+  
 
-
-
+  
 function initConfig() {
   botConfig = {
-		enabled : true
+		enabled : true 
   }
   unsafeWindow.botConfig = botConfig;
+  
 
-
-
-
+  
+  
   function toggleBot() {
 		unsafeWindow.botConfig.enabled = !unsafeWindow.botConfig.enabled;
 	}
-
+  
   $(window).on('keypress', function(e) {
 
     var code = (e.keyCode ? e.keyCode : e.which);
-    if(code == 'z'.charCodeAt(0)) {
+    if(code == 'z'.charCodeAt(0)) { 
     	toggleBot();
     }
 
 	});
-
+  
 }
 
 
 function initUi() {
 
 
-
+  
 	var uiHtml = `
 <div id='botInfo'>
 
 	<div>Bot enabled:<span id='botEnabled'>?</span></div>
-
+	
 
 <div>
 
@@ -281,29 +314,29 @@ function initUi() {
 }
 </style>
 	`;
-
-
+  
+  
   function updateUi() {
   	console.log('update ui called');
-
-
+    
+      	
     $('#botEnabled').text(botConfig.enabled ? "true" : "false");
   }
-
+  
 	var interval = setInterval(updateUi, 500);
-
+  
 	$("body").append(uiHtml);
 
-
+  
 }
 
-
-
-
-
-
+  
+  
+  
+  
+  
 ////////////////////
-
+  
 
 var _angle = 0;
 function testAngle() {
@@ -319,6 +352,6 @@ function testLocation() {
 	console.log(game.camera.pos);
 	setTimeout(testLocation, 100);
 }//testLocation();
-
-
+  
+  
 }
