@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name     	Surviv.io_aimbot
+// @name     	Surviv.io_esp
 // @namespace    http://tampermonkey.net/
 // @version  	1
 // @grant    	unsafeWindow
