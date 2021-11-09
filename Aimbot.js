@@ -9,10 +9,7 @@
 // ==/UserScript==
 
 //http://code.jquery.com/jquery-1.12.4.min.js
-
-(function() {
-	$(function() { main(); });
-})();
+var player = Object.keys(game[obfuscate.playerBarn][obfuscate.playerInfo]);;
 
    names(player) {
         if (!player) return
