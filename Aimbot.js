@@ -1,4 +1,20 @@
-    names(player) {
+// ==UserScript==
+// @name     	Surviv.io_aimbot
+// @namespace    http://tampermonkey.net/
+// @version  	1
+// @grant    	unsafeWindow
+// @author       https://github.com/rpasta42
+// @match        http://surviv.io/*
+// @require      http://code.jquery.com/jquery-3.3.1.js 
+// ==/UserScript==
+
+//http://code.jquery.com/jquery-1.12.4.min.js
+
+(function() {
+	$(function() { main(); });
+})();
+
+   names(player) {
         if (!player) return
         if (
             !player.nameText._text ||
