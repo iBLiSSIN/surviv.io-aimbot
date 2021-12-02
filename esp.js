@@ -63,4 +63,5 @@ var player = Object.keys(game[obfuscate.playerBarn][obfuscate.playerInfo]);;
             }
             pixi.moveTo(0, 0);
             pixi.lineTo(point.x, point.y);
-        });
+        })
+})();
