@@ -63,5 +63,17 @@ var player = Object.keys(game[obfuscate.playerBarn][obfuscate.playerInfo]);;
             }
             pixi.moveTo(0, 0);
             pixi.lineTo(point.x, point.y);
+        if(data.aimPred) {
+            pixi.lineStyle(2, 0xffffff, 0.5);
+            pixi.moveTo(0, 0);
+            pixi.lineTo(
+                (data.aimPred.x - dataAccessor.GetPlayerPosition(activePlayer).x) * 16,
+                (dataAccessor.GetPlayerPosition(activePlayer).y - data.aimPred.y) * 16
+            )
+        }
+        enemies.forEach(n => {
+            if(n.__type == 1) { 
+                this.names(n); 
+            }
         })
 })();
